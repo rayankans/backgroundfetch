@@ -172,3 +172,8 @@ function showResponses(fetchId, results) {
     resultList.appendChild(listItem);
   }
 }
+
+async function sendUpdateMessageToServiceWorker(msg) {
+  const sw = await navigator.serviceWorker.ready;
+  sw.active.postMessage(msg);
+}

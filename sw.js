@@ -1,3 +1,6 @@
+// Map from fetch id to update options.
+const updateMap = {};
+
 self.addEventListener('install', function(event) {
   event.waitUntil(skipWaiting());
 });
@@ -16,6 +19,10 @@ async function postMessageToWindow(msg) {
 function log(msg) {
   postMessageToWindow({logger: msg});
 }
+
+self.addEventListener('message', function(event) {
+  updateMap[event.data.id] = event.data;
+});
 
 async function cloneResponse(response) { 
   if (!response.body) return;
@@ -76,9 +83,21 @@ async function extractResponse(record) {
 async function handleBackgroundFetchEvent(event) {
   const responsePromises = [];
   const records = await event.registration.matchAll();
+
   for (const record of records) {
     responsePromises.push(extractResponse(record));
   }
+
+  const updateOptions = updateMap[event.registration.id];
+  for (let i = 0; i < updateOptions.numCalls; i++) {
+    try {
+      await event.updateUI(updateOptions.options);
+      log('Update UI for ' + event.registration.id);
+    } catch (e) {
+      log('Failed to update UI for ' + event.registration.id + '. ' + e.message);
+    }
+  }
+
   const responses = await Promise.all(responsePromises);
   postMessageToWindow({
     eventType: event.type,
@@ -102,6 +121,7 @@ self.addEventListener('backgroundfetchfail', async (event) => {
 
 self.addEventListener('backgroundfetchabort', async (event) => {
   log('Received backgroundfetchabort for ' + event.registration.id);
+  delete updateMap[event.registration.id];
   postMessageToWindow({
     eventType: event.type,
     responses: [],

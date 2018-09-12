@@ -13,6 +13,9 @@ class BackgroundFetchBuilder {
 
     /** @const {!BackgroundFetchOptions} */
     this.options_ = this.getOptions_();
+
+    // Informs the SW if UI updates are expected.
+    this.updateOptions_(); 
   }
 
   /**
@@ -140,6 +143,40 @@ class BackgroundFetchBuilder {
     }
 
     return options;
+  }
+
+  /** 
+   * Sends the SW everything it needs to know about how to handle the update event.
+   * @private
+   */
+  updateOptions_() {
+    if (!document.getElementById('update-ui').checked) 
+      return;
+    
+    const options = {};
+
+    // title.
+    if (document.getElementById('update-ui-title').getAttribute('aria-pressed') === 'true')
+      options.title = document.getElementById('update-ui-title-text').value;
+
+    // icon.
+    if (document.getElementById('image-resource-src').getAttribute('aria-pressed') === 'true') {
+      const imageResource = {
+        src: document.getElementById('update-ui-src-text').value,
+        sizes: '128x128',
+        purpose: 'any',
+      };
+
+      options.icons = [imageResource];
+    }
+
+    const numCalls = document.getElementById('update-ui-twice').checked ? 2 : 1;
+
+    sendUpdateMessageToServiceWorker({
+      id: this.id_,
+      options,
+      numCalls,
+    });
   }
 
   /** 
