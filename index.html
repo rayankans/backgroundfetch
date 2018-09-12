@@ -78,23 +78,23 @@
                  sizes
                 </button>
               </div>
-              <input type="text" class="form-control w-75" id="image-resource-sizes-text" value="128x128" > 
+              <input type="text" class="form-control w-75" id="image-resource-sizes-text" value="128x128"> 
             </div>
             <div class="input-group w-75">
               <div class="input-group-prepend w-25">
-                <button type="button" class="active btn btn-outline-primary w-100 radio-button" data-toggle="button" aria-pressed="true" id="image-resource-type">
+                <button type="button" class="btn btn-outline-secondary w-100 radio-button" data-toggle="button" aria-pressed="false" id="image-resource-type">
                   type
                 </button>
               </div>
-              <input type="text" class="form-control w-75" id="image-resource-type-text" value="image/png" > 
+              <input type="text" class="form-control w-75" id="image-resource-type-text" value="image/png" disabled> 
             </div>
             <div class="input-group w-75">
               <div class="input-group-prepend w-25">
-                <button type="button" class="btn btn-outline-secondary w-100 radio-button" data-toggle="button" aria-pressed="false" id="image-resource-purpose">
+                <button type="button" class="active btn btn-outline-primary w-100 radio-button" data-toggle="button" aria-pressed="true" id="image-resource-purpose">
                   purpose
                 </button>
               </div>
-              <input type="text" class="form-control w-75" id="image-resource-purpose-text" value="any" disabled > 
+              <input type="text" class="form-control w-75" id="image-resource-purpose-text" value="any"> 
             </div>
           </div>
         </fieldset>
@@ -270,7 +270,7 @@
   
     <!-- Third row starts -->
     <div class="row">
-      <div class="col-4">
+      <div class="col-4 text-truncate">
         <h1 class="text-center">Fetch Results</h1>
         <div id="fetch-results-container">
         </div>
