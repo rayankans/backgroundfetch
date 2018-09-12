@@ -1,0 +1,23 @@
+label {
+  margin-bottom: 0em; 
+}
+
+button {
+  margin-bottom: 5px;
+}
+
+.form-check {
+  margin-bottom: 5px;
+}
+
+.form-control {
+  margin-bottom: 15px; 
+}
+
+.radio-button {
+  margin-bottom: 1px;
+}
+
+#progress-container {
+  margin: 0 auto;
+}
