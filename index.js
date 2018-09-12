@@ -63,6 +63,9 @@ function createProgressBar(fetchId) {
 
   const progressBar = `
     <div class="fetch-status">
+      <button type="button" class="close" aria-label="Close" id="progress-bar-close-${fetchId}" onClick="onFetchClose(id)">
+        <span aria-hidden="true">×</span>
+      </button>
       <h6>${fetchId} <span class="badge badge-warning badge-pill" id="progress-bar-badge-${fetchId}">pending</span></h6>
       <div class="progress center-block">
         <div class="progress-bar progress-bar-striped" role="progressbar" id="progress-bar-${fetchId}"
@@ -71,6 +74,12 @@ function createProgressBar(fetchId) {
       </div>
     </div>`;
   $('#progress-container').prepend(progressBar);
+}
+
+async function onFetchClose(buttonId) {
+  const fetchId = buttonId.substring('progress-bar-close-'.length);
+  const registration = await bgfManager.get(fetchId);
+  registration.abort();
 }
 
 function updateProgressBar(fetchId, downloaded, downloadTotal) {
@@ -97,7 +106,6 @@ function finalizeProgressBar(fetchId, eventType, downloaded, downloadTotal, fail
   let progressBarClass = '';
   let badgeClass = '';
   let badgeText = '';
-
   if (eventType === 'backgroundfetchsuccess') {
     progressBarClass = 'bg-success';
     badgeClass = 'badge-success';
@@ -107,7 +115,7 @@ function finalizeProgressBar(fetchId, eventType, downloaded, downloadTotal, fail
     badgeClass = 'badge-danger';
     badgeText = 'fail';
     if (failureReason) badgeText += ' - ' + failureReason;
-  } else if (eventType === 'backgroundfetchfail') {
+  } else if (eventType === 'backgroundfetchabort') {
     progressBarClass = 'bg-info';
     badgeClass = 'badge-secondary';
     badgeText = 'abandon';

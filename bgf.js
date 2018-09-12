@@ -4,7 +4,6 @@ async function handleServiceWorkerMessage(data) {
   if (data.logger) {
     appendToLog(data.logger);
   } else if (data.eventType) {
-    console.log(data.eventType);
     finalizeProgressBar(data.id, data.eventType, data.downloaded, data.downloadTotal, data.failureReason);
     showResponses(data.id, data.responses);
   } else {
