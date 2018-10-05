@@ -47,7 +47,7 @@ async function cloneResponse(response) {
 
 async function extractResponse(record) {
   const response = await record.responseReady;
-  
+
   // Extract headers.
   const headers = {};
   for (const [name, value] of response.headers) {
@@ -108,6 +108,10 @@ async function handleBackgroundFetchEvent(event) {
     failureReason: event.registration.failureReason,
   });
 }
+
+self.addEventListener('backgroundfetchclick', (event) => {
+  log('Click event for ' + event.registration.id);
+});
 
 self.addEventListener('backgroundfetchsuccess', async (event) => {
   log('Received backgroundfetchsuccess for ' + event.registration.id);
