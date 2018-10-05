@@ -63,7 +63,7 @@ function createProgressBar(fetchId) {
 
   const progressBar = `
     <div class="fetch-status">
-      <button type="button" class="close" aria-label="Close" id="progress-bar-close-${fetchId}" onClick="onFetchClose(id)">
+      <button type="button" class="close" aria-label="Close" id="progress-bar-close-${fetchId}" onClick="onFetchClose('${fetchId}')">
         <span aria-hidden="true">×</span>
       </button>
       <h6>${fetchId} <span class="badge badge-warning badge-pill" id="progress-bar-badge-${fetchId}">pending</span></h6>
@@ -76,10 +76,13 @@ function createProgressBar(fetchId) {
   $('#progress-container').prepend(progressBar);
 }
 
-async function onFetchClose(buttonId) {
-  const fetchId = buttonId.substring('progress-bar-close-'.length);
-  const registration = await bgfManager.get(fetchId);
-  registration.abort();
+async function onFetchClose(fetchId) {
+  try {
+    const registration = await bgfManager.get(fetchId);
+    registration.abort();
+  } catch (e) {
+    appendToLog('Failed to abort: ', fetchId, '. ', e.message);
+  }
 }
 
 function updateProgressBar(fetchId, downloaded, downloadTotal) {
