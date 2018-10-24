@@ -46,7 +46,13 @@ async function cloneResponse(response) {
 }
 
 async function extractResponse(record) {
-  const response = await record.responseReady;
+  let response = record.responseReady
+  try {
+    response = await response;
+  } catch (e) {
+    log('No response for ' + record.request.url + ': ' + e.message);
+    return Promise.resolve(null);
+  }
 
   // Extract headers.
   const headers = {};
@@ -89,7 +95,8 @@ async function handleBackgroundFetchEvent(event) {
   }
 
   const updateOptions = updateMap[event.registration.id];
-  for (let i = 0; i < updateOptions.numCalls; i++) {
+  numCalls = updateOptions ? updateOptions.numCalls : 0;
+  for (let i = 0; i < numCalls; i++) {
     try {
       await event.updateUI(updateOptions.options);
       log('Update UI for ' + event.registration.id);
@@ -111,6 +118,7 @@ async function handleBackgroundFetchEvent(event) {
 
 self.addEventListener('backgroundfetchclick', (event) => {
   log('Click event for ' + event.registration.id);
+  clients.openWindow('/');
 });
 
 self.addEventListener('backgroundfetchsuccess', async (event) => {
@@ -126,12 +134,5 @@ self.addEventListener('backgroundfetchfail', async (event) => {
 self.addEventListener('backgroundfetchabort', async (event) => {
   log('Received backgroundfetchabort for ' + event.registration.id);
   delete updateMap[event.registration.id];
-  postMessageToWindow({
-    eventType: event.type,
-    responses: [],
-    id: event.registration.id,
-    downloaded: event.registration.downloaded,
-    downloadTotal: event.registration.downloadTotal,
-    failureReason: event.registration.failureReason,
-  });
+  event.waitUntil(handleBackgroundFetchEvent(event));
 });

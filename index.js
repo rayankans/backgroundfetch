@@ -142,6 +142,8 @@ function showResponses(fetchId, results) {
   resultName.innerText = fetchId;
 
   for (const result of results) {
+    if (!result) continue;
+
     const listItem = document.createElement('li'),
           resourceName = document.createElement('h4'),
           resourceStatus = document.createElement('h5'),
