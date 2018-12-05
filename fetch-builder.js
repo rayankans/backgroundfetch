@@ -85,7 +85,7 @@ class BackgroundFetchBuilder {
     // Upload.
     if (document.getElementById('request-upload').checked) {
       requests.push(
-          new Request('resources/random-cat-joke.php', 
+          new Request('resources/upload.php', 
                       {method: 'POST', body: 'body text!'}));
     }
 
