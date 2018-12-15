@@ -89,6 +89,14 @@ class BackgroundFetchBuilder {
                       {method: 'POST', body: 'body text!'}));
     }
 
+    // Large Upload.
+    if (document.getElementById('request-upload-large').checked) {
+      const size = document.getElementById('upload-size').value;
+      requests.push(
+        new Request('resources/upload-large.php', 
+                    {method: 'POST', body: '!'.repeat(size * 1024 * 1024)}));
+    }
+
     // Custom.
     if (document.getElementById('request-custom').checked) {
       requests.push(document.getElementById('request-custom-text').value);
