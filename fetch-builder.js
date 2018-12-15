@@ -95,6 +95,7 @@ class BackgroundFetchBuilder {
       requests.push(
         new Request('resources/upload-large.php', 
                     {method: 'POST', body: '!'.repeat(size * 1024 * 1024)}));
+      this.estimatedDownloadTotal_ += 10;  // give or take.
     }
 
     // Custom.
