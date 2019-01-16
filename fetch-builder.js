@@ -87,6 +87,7 @@ class BackgroundFetchBuilder {
       requests.push(
           new Request('resources/upload.php', 
                       {method: 'POST', body: 'body text!'}));
+      this.estimatedDownloadTotal_ += 'body text!'.length;
     }
 
     // Large Upload.

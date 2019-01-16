@@ -112,6 +112,8 @@ async function handleBackgroundFetchEvent(event) {
     id: event.registration.id,
     downloaded: event.registration.downloaded,
     downloadTotal: event.registration.downloadTotal,
+    uploaded: event.registration.uploaded,
+    uploadTotal: event.registration.uploadTotal,
     failureReason: event.registration.failureReason,
   });
 }

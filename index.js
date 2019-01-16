@@ -85,10 +85,10 @@ async function onFetchClose(fetchId) {
   }
 }
 
-function updateProgressBar(fetchId, downloaded, downloadTotal) {
+function updateProgressBar(fetchId, downloaded, downloadTotal, uploaded, uploadTotal) {
   let percentage = 0; 
-  if (downloadTotal) {
-    percentage = Number.parseInt(downloaded * 100 / downloadTotal);
+  if (downloadTotal + uploadTotal) {
+    percentage = Number.parseInt((downloaded + uploaded) * 100 / (downloadTotal + uploadTotal));
     if (percentage === 0) percentage = 1;
   } else {
     // No download total, show full progress bar.
@@ -98,13 +98,17 @@ function updateProgressBar(fetchId, downloaded, downloadTotal) {
   
   const progressBar = document.getElementById(`progress-bar-${fetchId}`);
   progressBar.style.width = `${percentage}%`;
-  progressBar.textContent = `${downloaded}KB/${downloadTotal}KB`;
+  progressBar.textContent =
+      `download: ${downloaded}B/${downloadTotal}B | upload: ${uploaded}B/${uploadTotal}B`;
 }
 
-function finalizeProgressBar(fetchId, eventType, downloaded, downloadTotal, failureReason) {
+function finalizeProgressBar(
+    fetchId, eventType, downloaded, downloadTotal,
+    uploaded, uploadTotal, failureReason) {
   const progressBar = document.getElementById(`progress-bar-${fetchId}`);
   progressBar.style.width = '100%';
-  progressBar.textContent = `${downloaded}KB/${downloadTotal}KB`;
+  progressBar.textContent = 
+      `download: ${downloaded}B/${downloadTotal}B | upload: ${uploaded}B/${uploadTotal}B`;
 
   let progressBarClass = '';
   let badgeClass = '';

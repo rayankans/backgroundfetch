@@ -4,7 +4,8 @@ async function handleServiceWorkerMessage(data) {
   if (data.logger) {
     appendToLog(data.logger);
   } else if (data.eventType) {
-    finalizeProgressBar(data.id, data.eventType, data.downloaded, data.downloadTotal, data.failureReason);
+    finalizeProgressBar(data.id, data.eventType, data.downloaded, data.downloadTotal,
+                        data.uploaded, data.uploadTotal, data.failureReason);
     showResponses(data.id, data.responses);
   } else {
     appendToLog('Received message from SW: ', data);
@@ -46,13 +47,16 @@ async function pageSetup() {
   for (const id of registrationIds) {
     const registration = await bgfManager.get(id);
     createProgressBar(id);
-    updateProgressBar(id, registration.downloaded, registration.downloadTotal);
+    updateProgressBar(id, registration.downloaded, registration.downloadTotal,
+                      registration.uploaded, registration.uploadTotal);
   }
 }
 
 function handleUpdateEvent(event) {
-  appendToLog('Progress event from ', event.target.id, '. downloaded: ', event.target.downloaded);
-  updateProgressBar(event.target.id, event.target.downloaded, event.target.downloadTotal);
+  appendToLog('Progress event from ', event.target.id, '. downloaded: ',
+              event.target.downloaded, 'B. uploaded: ', event.target.uploaded, 'B.');
+  updateProgressBar(event.target.id, event.target.downloaded, event.target.downloadTotal,
+                    event.target.uploaded, event.target.uploadTotal);
 }
 
 async function startFetch() {
