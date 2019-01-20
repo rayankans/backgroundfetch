@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta http-equiv="Origin-Trial" content="ApdeGz3Qmvc/ozxNeoQlEYoQi/DusqAERbR+HYKqkoubJGxKpgcqpa/05nJdT0rcRuGOcNUcSsZB2cS0JCqgjQ0AAABceyJvcmlnaW4iOiJodHRwczovL2JhY2tncm91bmRmZXRjaC5jb206NDQzIiwiZmVhdHVyZSI6IkJhY2tncm91bmRGZXRjaCIsImV4cGlyeSI6MTU1MTYxNDExMX0=">
+  <meta http-equiv="Origin-Trial" content="AsMt0FC+tsr9lmr/VtfwOh30DfkoYvgnsdq8G35QjODs34b5+8ivhC4y85rDCsdKkCHMF5Y9X5T/8hyC5yIqDAUAAABveyJvcmlnaW4iOiJodHRwczovL2JhY2tncm91bmRmZXRjaC5jb206NDQzIiwiZmVhdHVyZSI6IkJhY2tncm91bmRGZXRjaCIsImV4cGlyeSI6MTU0ODUwNTY5MCwiaXNTdWJkb21haW4iOnRydWV9">
   <title>Background Fetch Test Website</title>
 
   <!-- Bootstrap because I can't CSS. -->
@@ -24,7 +24,7 @@
   <!-- Jumbotron on top of page -->
   <div class="jumbotron">
     <h1 class="display-4">Background Fetch Test Website</h1>
-    <p class="lead">This is a test website to test different aspects and features of Background Fetch</p>
+    <p class="lead">This is a a test website to test different aspects and features of Background Fetch</p>
     <hr class="my-4">
     <p>For more info about Background Fetch check the <a href="https://wicg.github.io/background-fetch/">spec</a>.</p>
   </div>
