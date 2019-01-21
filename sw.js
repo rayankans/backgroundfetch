@@ -24,7 +24,7 @@ self.addEventListener('message', function(event) {
   updateMap[event.data.id] = event.data;
 });
 
-async function cloneResponse(response) { 
+async function cloneResponse(response) {
   if (!response.body) return;
 
   // Clone |response| and stream because of some legacy Paul joke.
@@ -120,7 +120,7 @@ async function handleBackgroundFetchEvent(event) {
 
 self.addEventListener('backgroundfetchclick', (event) => {
   log('Click event for ' + event.registration.id);
-  clients.openWindow('/');
+  event.waitUntil(clients.openWindow('/'));
 });
 
 self.addEventListener('backgroundfetchsuccess', async (event) => {
