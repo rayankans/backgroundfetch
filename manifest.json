@@ -1,0 +1,16 @@
+{
+  "short_name": "Background Fetch",
+  "name": "Background Fetch Test",
+  "icons": [
+    {
+      "src": "/resources/yamero.jpg",
+      "type": "image/jpg",
+      "sizes": "326x326"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#3367D6"
+}
