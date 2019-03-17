@@ -1,11 +1,16 @@
 {
-  "short_name": "Background Fetch",
+  "short_name": "BGF Test",
   "name": "Background Fetch Test",
   "icons": [
     {
-      "src": "/resources/yamero.jpg",
-      "type": "image/jpg",
-      "sizes": "326x326"
+      "src": "/resources/yamero-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/resources/yamero-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ],
   "start_url": "/?source=pwa",
