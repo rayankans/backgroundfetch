@@ -1,12 +1,62 @@
 // Map from fetch id to update options.
 const updateMap = {};
 
+const CACHE_NAME = 'bgf-static-v1';
+
 self.addEventListener('install', function(event) {
-  event.waitUntil(skipWaiting());
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function(cache) {
+      return cache.addAll([
+        '/',
+        '/index.js',
+        '/bgf.js',
+        '/fetch-builder.js',
+        '/styles.css',
+        '/static/bootstrap.css',
+        '/static/bootstrap.js',
+        '/static/jquery.js',
+        '/static/popper.js',
+      ]);
+    })
+  );
 });
 
 self.addEventListener('activate', function(event) {
-  event.waitUntil(clients.claim());
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.filter(cacheName => cacheName !== CACHE_NAME)
+                  .map(cacheName => caches.delete(cacheName)));
+    }));
+});
+
+self.addEventListener('fetch', function(event) {
+  const requestURL = new URL(event.request.url);
+
+  if (requestURL.pathname.startsWith('/static')) {
+    // Always return from the cache for static 3P assets.
+    event.respondWith(caches.match(event.request));
+    return;
+  }
+
+  if (requestURL.pathname.startsWith('/resources')) {
+    // Always use the network to test Background Fetch fetches.
+    event.respondWith(fetch(event.request));
+    return;
+  }
+
+  // Use cached verison and update with network version.
+  event.respondWith(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.match(event.request).then(response => {
+        const fetchPromise = fetch(event.request).then(networkResponse => {
+          cache.put(event.request, networkResponse.clone());
+          return networkResponse;
+        })
+        return response || fetchPromise;
+      })
+    })
+  );
 });
 
 async function postMessageToWindow(msg) {
