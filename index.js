@@ -44,6 +44,21 @@ function appendToLog() {
   $('#log').append(`<label><strong>[${Date.now()}]: </strong>${msg}</label><br>`);
 }
 
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', event => {
+  event.preventDefault();
+  deferredPrompt = event;
+  $('.jumbotron').append(`<p id="install"> <a href="#" onclick="installPWA()">Install</a> the PWA. </p>`);
+});
+
+function installPWA() {
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => {
+    deferredPrompt = null;
+    $('#install').remove();
+  });
+}
+
 async function handleClickEvent() {
   if (document.getElementById('abandon').checked) {
     await abandonFetches();
