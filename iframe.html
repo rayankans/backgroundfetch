@@ -1,8 +1,0 @@
-<script>
-window.addEventListener('message', async e => {
-  const swRegistration = await navigator.serviceWorker.ready;
-  const registration = await swRegistration.backgroundFetch.fetch(
-      e.data.id, e.data.requests, e.data.options);
-  window.parent.postMessage(registration);
-});
-</script>

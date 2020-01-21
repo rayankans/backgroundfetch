@@ -14,7 +14,10 @@
     }
   ],
   "related_applications": [
-    {"platform": "pwa"}
+    {
+      "platform": "pwa",
+      "url": "https://backgroundfetch.com/manifest.json"
+    }
   ],
   "start_url": "/?source=pwa",
   "background_color": "#3367D6",
