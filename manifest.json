@@ -15,8 +15,12 @@
   ],
   "related_applications": [
     {
-      "platform": "pwa",
+      "platform": "webapp",
       "url": "https://backgroundfetch.com/manifest.json"
+    },
+    {
+      "platform": "webapp",
+      "url": "https://contentindex.dev/manifest.json"
     }
   ],
   "start_url": "/?source=pwa",
